@@ -185,6 +185,42 @@ const filterUserByMonth = async (req, res) => {
     return res.status(500).json(err);
   }
 };
+
+const filterUserByDate = async (req, res) => {
+  const date = new Date();
+  const lastDate = new Date(date.setDate(date.getDate()));
+  try {
+    const result = await User.aggregate([
+      {
+        $match: {
+          createdAt: { $lte: lastDate },
+          // status: "approved",
+        },
+      },
+      {
+        $project: {
+          // dayOfMonth: { $dayOfMonth: "$createdAt" },
+          // month: { $month: "$createdAt" },
+          // year: { $year: "$createdAt" },
+          yearMonthDayUTC: {
+            $dateToString: { format: "%Y/%m/%d", date: "$createdAt" },
+          },
+          // total: "$costs",
+        },
+      },
+      {
+        $group: {
+          _id: "$yearMonthDayUTC",
+          // totalTransaction: { $sum: "$total" },
+          count: { $sum: 1 },
+        },
+      },
+    ]).sort({ ["_id"]: "asc" });
+    return res.status(200).json(result);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
 module.exports = {
   getUser,
   getUserByEmail,
@@ -195,4 +231,5 @@ module.exports = {
   getAllUser,
   getUserNewest,
   filterUserByMonth,
+  filterUserByDate,
 };

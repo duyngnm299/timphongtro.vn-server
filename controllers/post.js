@@ -136,7 +136,8 @@ const SearchFilterPost = async (req, res) => {
   const areaLte =
     (req.query.areaLte && parseInt(req.query.areaLte)) || 99999999999;
   const type = req.query.type || "";
-  const status = req.query.status || "";
+  const status = req.query.status || "approved";
+  console.log(status);
   //province
   const district = req.query.district || "";
   console.log(price_gte, price_lte);
@@ -289,8 +290,7 @@ const getPostListOfUser = async (req, res) => {
         // { title: { $regex: title } },
         // { postType: { $regex: type } },
         { createdBy: createdBy },
-
-        // { status: { $regex: status } },
+        { status: "approved" },
       ],
     })
       .sort({ [field]: condition })
@@ -475,6 +475,64 @@ const filterPostByMonth = async (req, res) => {
     return res.status(500).json(err);
   }
 };
+
+const filterPostByDate = async (req, res) => {
+  const date = new Date();
+  const lastDate = new Date(date.setDate(date.getDate()));
+  try {
+    const result = await Post.aggregate([
+      {
+        $match: {
+          createdAt: { $lte: lastDate },
+          // status: "approved",
+        },
+      },
+      {
+        $project: {
+          // dayOfMonth: { $dayOfMonth: "$createdAt" },
+          // month: { $month: "$createdAt" },
+          // year: { $year: "$createdAt" },
+          yearMonthDayUTC: {
+            $dateToString: { format: "%Y/%m/%d", date: "$createdAt" },
+          },
+          // total: "$costs",
+        },
+      },
+      {
+        $group: {
+          _id: "$yearMonthDayUTC",
+          // totalTransaction: { $sum: "$total" },
+          count: { $sum: 1 },
+        },
+      },
+    ]).sort({ ["_id"]: "asc" });
+    return res.status(200).json(result);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
+
+const filterPostByDistrict = async (req, res) => {
+  try {
+    const result = await Post.aggregate([
+      { $match: { district: { $regex: "" } } },
+      {
+        $project: {
+          address: "$district",
+        },
+      },
+      {
+        $group: {
+          _id: "$address",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+    return res.status(200).json({ result });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
 module.exports = {
   createPost,
   getAllPost,
@@ -490,4 +548,6 @@ module.exports = {
   adminCensorPost,
   createPreviewPost,
   filterPostByMonth,
+  filterPostByDate,
+  filterPostByDistrict,
 };

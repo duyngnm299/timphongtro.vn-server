@@ -18,6 +18,8 @@ const {
   adminCensorPost,
   createPreviewPost,
   filterPostByMonth,
+  filterPostByDate,
+  filterPostByDistrict,
 } = require("../controllers/post");
 const middlewareController = require("../middleware/middleware");
 router.post("/", upload.array("images"), createPost);
@@ -34,5 +36,7 @@ router.post("/update-expired/:id", updateExpiredPost);
 router.get("/admin/getlistpost", adminGetListPost);
 router.post("/admin/censor/:id", adminCensorPost);
 router.get("/filter/month", filterPostByMonth);
+router.get("/filter/date", filterPostByDate);
+router.get("/filter/district", filterPostByDistrict);
 
 module.exports = router;

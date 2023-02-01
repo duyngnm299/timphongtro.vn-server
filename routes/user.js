@@ -12,6 +12,7 @@ const {
   deleteUser,
   getUserNewest,
   filterUserByMonth,
+  filterUserByDate,
 } = require("../controllers/user");
 const middlewareController = require("../middleware/middleware");
 
@@ -28,5 +29,6 @@ router.post("/update-save-post/:id", updateUserSavePost);
 router.post("/deleted-save-post/:id", deleteSavePost);
 router.post("/deleted/:id", deleteUser);
 router.get("/filter/month", filterUserByMonth);
+router.get("/filter/date", filterUserByDate);
 
 module.exports = router;
