@@ -63,6 +63,7 @@ const userSchema = mongoose.Schema(
       ],
     },
     savedPost: { type: Array },
+    reportedPost: { type: Array },
     balance: { type: Number, default: 0 },
     identityCard: { type: String },
     zalo: { type: String },

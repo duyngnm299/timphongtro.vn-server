@@ -1,5 +1,6 @@
 const { Post } = require("../models/Post");
 const { User } = require("../models/User");
+const { ReportedPost } = require("../models/ReportedPost");
 const mongoose = require("mongoose");
 
 const createPost = async (req, res, next) => {
@@ -305,6 +306,7 @@ const getPostListOfUser = async (req, res) => {
         // { title: { $regex: title } },
         // { postType: { $regex: type } },
         { createdBy: createdBy },
+        { status: "approved" },
       ],
     }).countDocuments();
     const pagination = {
@@ -512,6 +514,28 @@ const filterPostByDate = async (req, res) => {
   }
 };
 
+const filterPostByCategory = async (req, res) => {
+  try {
+    const result = await Post.aggregate([
+      { $match: { category_name: { $regex: "" } } },
+      {
+        $project: {
+          category: "$category_name",
+        },
+      },
+      {
+        $group: {
+          _id: "$category",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+    return res.status(200).json({ result });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
+
 const filterPostByDistrict = async (req, res) => {
   try {
     const result = await Post.aggregate([
@@ -533,6 +557,76 @@ const filterPostByDistrict = async (req, res) => {
     return res.status(500).json({ error });
   }
 };
+
+const createReportedPost = async (req, res) => {
+  try {
+    const {
+      idPost,
+      postCode,
+      titlePost,
+      descReport,
+      createdBy,
+      userFullName,
+      userPhoneNumber,
+      userEmail,
+    } = req.body;
+    console.log(req.body);
+    const reported = await ReportedPost.create({
+      idPost,
+      postCode,
+      titlePost,
+      descReport,
+      createdBy,
+      userFullName,
+      userPhoneNumber,
+      userEmail,
+    });
+    return res.status(200).json({ reported });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
+
+const deletedReportedPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("id: ", id);
+    const deleted = await ReportedPost.findByIdAndDelete(id);
+    return res.status(200).json({ deleted });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
+
+const getAllReported = async (req, res) => {
+  try {
+    const reported = await ReportedPost.find();
+    return res.status(200).json({ reported });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
+
+const getDetailReported = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const reported = await ReportedPost.findById(id);
+    return res.status(200).json({ reported });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
+
+const getReportedByPostId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const reported = await ReportedPost.find({ idPost: id });
+    return res.status(200).json({ reported });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
+
 module.exports = {
   createPost,
   getAllPost,
@@ -550,4 +644,10 @@ module.exports = {
   filterPostByMonth,
   filterPostByDate,
   filterPostByDistrict,
+  filterPostByCategory,
+  createReportedPost,
+  deletedReportedPost,
+  getAllReported,
+  getDetailReported,
+  getReportedByPostId,
 };

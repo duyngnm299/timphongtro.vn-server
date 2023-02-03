@@ -20,6 +20,12 @@ const {
   filterPostByMonth,
   filterPostByDate,
   filterPostByDistrict,
+  filterPostByCategory,
+  createReportedPost,
+  deletedReportedPost,
+  getAllReported,
+  getDetailReported,
+  getReportedByPostId,
 } = require("../controllers/post");
 const middlewareController = require("../middleware/middleware");
 router.post("/", upload.array("images"), createPost);
@@ -38,5 +44,11 @@ router.post("/admin/censor/:id", adminCensorPost);
 router.get("/filter/month", filterPostByMonth);
 router.get("/filter/date", filterPostByDate);
 router.get("/filter/district", filterPostByDistrict);
+router.get("/filter/category", filterPostByCategory);
+router.post("/create/reported", createReportedPost);
+router.post("/deleted/reported/:id", deletedReportedPost);
+router.get("/get-all/reported", getAllReported);
+router.post("/detail/reported/:id", getDetailReported);
+router.get("/get-reported-by-post-id/:id", getReportedByPostId);
 
 module.exports = router;

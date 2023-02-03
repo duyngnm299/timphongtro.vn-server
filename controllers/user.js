@@ -108,6 +108,33 @@ const updateUserSavePost = async (req, res) => {
     return res.status(400).json(error);
   }
 };
+const updateUserReportedPost = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const reported = req.body;
+    const us = await User.findById(id);
+    if (us.reportedPost.length > 0) {
+      let arrPost = [...us.reportedPost];
+      let temp = arrPost.some((item) => item._id === reported._id);
+      if (temp) {
+        return res.send("nothing change");
+      }
+      if (!temp) {
+        arrPost.push(reported);
+        us.reportedPost = arrPost;
+        us.save();
+        return res.status(200).json({ us });
+      }
+    } else {
+      us.reportedPost = [reported];
+      us.save();
+      return res.status(200).json({ us });
+    }
+  } catch (error) {
+    return res.status(400).json(error);
+  }
+};
+
 const deleteSavePost = async (req, res) => {
   try {
     const id = req.params.id;
@@ -116,6 +143,22 @@ const deleteSavePost = async (req, res) => {
     let arr = [...us.savedPost];
     let newArr = arr.filter((item) => item._id !== postId);
     us.savedPost = newArr;
+    us.save();
+    return res.status(200).json({ us });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+};
+
+const deleteReportedPostOfUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { postId } = req.body;
+    console.log("[postId]", postId);
+    const us = await User.findById(id);
+    let arr = [...us.reportedPost];
+    let newArr = arr.filter((item) => item._id !== postId);
+    us.reportedPost = newArr;
     us.save();
     return res.status(200).json({ us });
   } catch (error) {
@@ -232,4 +275,6 @@ module.exports = {
   getUserNewest,
   filterUserByMonth,
   filterUserByDate,
+  updateUserReportedPost,
+  deleteReportedPostOfUser,
 };
