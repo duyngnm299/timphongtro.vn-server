@@ -37,6 +37,18 @@ const handleChat = (io) => {
         receiverId,
       });
     });
+    socket.on("sendCurrentPost", async ({ senderId, receiverId, post }) => {
+      console.log(senderId, receiverId, post);
+      console.log("[users]", users);
+      const user = await getUser(receiverId);
+
+      console.log("[user]", user);
+      io.to(user?.socketId).emit("getCurrentPost", {
+        senderId,
+        receiverId,
+        post,
+      });
+    });
     // Khi ai đó đang nhập
     socket.on("entering", async (receiverId, sender) => {
       const user = await getUser(receiverId);

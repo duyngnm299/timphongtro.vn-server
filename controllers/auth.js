@@ -204,7 +204,7 @@ const authController = {
               typeAccount,
               isVerify: true,
               memberCode: "TPT" + memberCode,
-              balance: 1000000,
+              balance: 0,
             });
             console.log(user);
             const refreshToken = authController.generateRefreshToken(user);
@@ -338,7 +338,7 @@ const authController = {
         gender,
         phoneNumber,
         isVerify: true,
-        balance: 1000000,
+        balance: 0,
       });
 
       return res.status(200).json({ user });

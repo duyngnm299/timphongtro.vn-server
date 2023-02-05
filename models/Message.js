@@ -11,6 +11,7 @@ const MessageSchema = new mongoose.Schema(
     text: {
       type: String,
     },
+    post: { type: Object },
     seen: {
       type: Boolean,
       default: false,

@@ -2,9 +2,11 @@ const { findByIdAndUpdate } = require("../models/Message");
 const Message = require("../models/Message");
 
 const addMessage = async (req, res) => {
+  console.log("[message] :", req.body);
   const newMessage = new Message(req.body);
   try {
     const savedMessage = await newMessage.save();
+    console.log("[savedMessage]", savedMessage);
     return res.status(200).json({ savedMessage });
   } catch (error) {
     return res.json(500).json({ error });
