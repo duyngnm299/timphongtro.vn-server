@@ -287,7 +287,7 @@ const authController = {
           //   sameSite: "strict",
           // });
           res.cookie("cookie_user", refreshToken, {
-            httpOnly: true,
+            // httpOnly: true,
             secure: false,
             path: "/",
             sameSite: "strict",
@@ -374,7 +374,7 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("cookie_user", newRefreshToken, {
-        httpOnly: true,
+        // httpOnly: true,
         secure: false,
         path: "/",
         sameSite: "strict",
