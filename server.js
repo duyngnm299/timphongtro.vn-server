@@ -27,11 +27,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: [
-      process.env.CLIENT_URL,
-      "http://localhost:3000",
-      "https://timphongtro-vn.vercel.app",
-    ],
+    origin: [process.env.CLIENT_URL, "http://localhost:3000"],
     methods: "GET, POST, PUT, DELETE",
     credentials: true,
   })
