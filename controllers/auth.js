@@ -126,9 +126,11 @@ const authController = {
         //   sameSite: "strict",
         // });
         res.cookie("refresh_token", refreshToken, {
-          domain: "https://timphongtro-vn.vercel.app",
-          secure: true,
-          path: "/quan-tri-vien",
+          httpOnly: false,
+          secure: false,
+          path: "/",
+          // domain: "http://localhost:3000",
+          // sameSite: "strict",
         });
         return res
           .status(200)
@@ -222,10 +224,11 @@ const authController = {
             // Lưu refreshToken vào mảng
             refreshTokens.push(refreshToken);
             res.cookie("cookie_user", refreshToken, {
-              httpOnly: true,
+              httpOnly: false,
               secure: false,
               path: "/",
-              sameSite: "strict",
+              // domain: "http://localhost:3000",
+              // sameSite: "strict",
             });
 
             // access token
@@ -280,9 +283,11 @@ const authController = {
           // Lưu refreshToken vào mảng
           refreshTokens.push(refreshToken);
           res.cookie("cookie_user", refreshToken, {
-            domain: "https://timphongtro-vn.vercel.app",
-            secure: true,
+            httpOnly: false,
+            secure: false,
             path: "/",
+            // domain: "http://localhost:3000",
+            // sameSite: "strict",
           });
           res
             .status(200)
@@ -366,9 +371,11 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("cookie_user", newRefreshToken, {
-        domain: "https://timphongtro-vn.vercel.app",
-        secure: true,
+        httpOnly: false,
+        secure: false,
         path: "/",
+        // domain: "http://localhost:3000",
+        // sameSite: "strict",
       });
 
       return res.status(200).json({ accessToken: newAccessToken });
@@ -400,9 +407,11 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("refresh_token", newRefreshToken, {
-        domain: "https://timphongtro-vn.vercel.app",
-        secure: true,
+        httpOnly: false,
+        secure: false,
         path: "/",
+        // domain: "http://localhost:3000",
+        // sameSite: "strict",
       });
 
       return res.status(200).json({ accessToken: newAccessToken });
