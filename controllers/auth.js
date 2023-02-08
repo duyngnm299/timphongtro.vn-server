@@ -126,10 +126,9 @@ const authController = {
         //   sameSite: "strict",
         // });
         res.cookie("refresh_token", refreshToken, {
-          httpOnly: true,
-          secure: false,
-          path: "/",
-          sameSite: "strict",
+          domain: "https://timphongtro-vn.vercel.app",
+          secure: true,
+          path: "/quan-tri-vien",
         });
         return res
           .status(200)
@@ -280,17 +279,10 @@ const authController = {
             authController.generateRefreshToken(alreadyExistUser);
           // Lưu refreshToken vào mảng
           refreshTokens.push(refreshToken);
-          // res.cookie("refreshToken", refreshToken, {
-          //   httpOnly: true,
-          //   secure: false,
-          //   path: "/",
-          //   sameSite: "strict",
-          // });
           res.cookie("cookie_user", refreshToken, {
-            httpOnly: true,
-            secure: false,
+            domain: "https://timphongtro-vn.vercel.app",
+            secure: true,
             path: "/",
-            sameSite: "strict",
           });
           res
             .status(200)
@@ -374,10 +366,9 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("cookie_user", newRefreshToken, {
-        httpOnly: true,
-        secure: false,
+        domain: "https://timphongtro-vn.vercel.app",
+        secure: true,
         path: "/",
-        sameSite: "strict",
       });
 
       return res.status(200).json({ accessToken: newAccessToken });
@@ -409,10 +400,9 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("refresh_token", newRefreshToken, {
-        httpOnly: true,
-        secure: false,
+        domain: "https://timphongtro-vn.vercel.app",
+        secure: true,
         path: "/",
-        sameSite: "strict",
       });
 
       return res.status(200).json({ accessToken: newAccessToken });
