@@ -123,13 +123,13 @@ const authController = {
         //   httpOnly: true,
         //   secure: false,
         //   path: "/",
-        //   sameSite: "strict",
+        //   sameSite: "none",
         // });
         res.cookie("refresh_token", refreshToken, {
-          httpOnly: true,
+          // httpOnly: true,
           secure: false,
           path: "/",
-          sameSite: "strict",
+          sameSite: "none",
         });
         return res
           .status(200)
@@ -223,10 +223,10 @@ const authController = {
             // Lưu refreshToken vào mảng
             refreshTokens.push(refreshToken);
             res.cookie("cookie_user", refreshToken, {
-              httpOnly: true,
+              // httpOnly: true,
               secure: false,
               path: "/",
-              sameSite: "strict",
+              sameSite: "none",
             });
 
             // access token
@@ -281,16 +281,16 @@ const authController = {
           // Lưu refreshToken vào mảng
           refreshTokens.push(refreshToken);
           // res.cookie("refreshToken", refreshToken, {
-          //   httpOnly: true,
+          // httpOnly: true,
           //   secure: false,
           //   path: "/",
-          //   sameSite: "strict",
+          //   sameSite: "none",
           // });
           res.cookie("cookie_user", refreshToken, {
             // httpOnly: true,
             secure: false,
             path: "/",
-            sameSite: "strict",
+            sameSite: "none",
           });
           res
             .status(200)
@@ -377,7 +377,7 @@ const authController = {
         // httpOnly: true,
         secure: false,
         path: "/",
-        sameSite: "strict",
+        sameSite: "none",
       });
 
       return res.status(200).json({ accessToken: newAccessToken });
@@ -409,10 +409,10 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("refresh_token", newRefreshToken, {
-        httpOnly: true,
+        // httpOnly: true,
         secure: false,
         path: "/",
-        sameSite: "strict",
+        sameSite: "none",
       });
 
       return res.status(200).json({ accessToken: newAccessToken });
