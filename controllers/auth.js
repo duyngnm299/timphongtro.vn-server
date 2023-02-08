@@ -119,18 +119,10 @@ const authController = {
           authController.generateRefreshToken(alreadyExistUser);
         // Lưu refreshToken vào mảng
         refreshTokens.push(refreshToken);
-        // res.cookie("refreshToken", refreshToken, {
-        //   httpOnly: true,
-        //   secure: false,
-        //   path: "/",
-        //   sameSite: "strict",
-        // });
         res.cookie("refresh_token", refreshToken, {
-          httpOnly: false,
-          secure: false,
-          path: "/",
-          // domain: "http://localhost:3000",
-          // sameSite: "strict",
+          secure: true,
+          path: "/quan-tri-vien",
+          sameSite: "none",
         });
         return res
           .status(200)
@@ -224,11 +216,10 @@ const authController = {
             // Lưu refreshToken vào mảng
             refreshTokens.push(refreshToken);
             res.cookie("cookie_user", refreshToken, {
-              httpOnly: false,
-              secure: false,
+              secure: true,
               path: "/",
+              sameSite: "none",
               // domain: "http://localhost:3000",
-              // sameSite: "strict",
             });
 
             // access token
@@ -283,11 +274,9 @@ const authController = {
           // Lưu refreshToken vào mảng
           refreshTokens.push(refreshToken);
           res.cookie("cookie_user", refreshToken, {
-            httpOnly: false,
-            secure: false,
+            secure: true,
             path: "/",
-            // domain: "http://localhost:3000",
-            // sameSite: "strict",
+            sameSite: "none",
           });
           res
             .status(200)
@@ -371,9 +360,9 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("cookie_user", newRefreshToken, {
-        httpOnly: false,
-        secure: false,
+        secure: true,
         path: "/",
+        sameSite: "none",
         // domain: "http://localhost:3000",
         // sameSite: "strict",
       });
@@ -407,9 +396,9 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("refresh_token", newRefreshToken, {
-        httpOnly: false,
-        secure: false,
-        path: "/",
+        secure: true,
+        path: "/quan-tri-vien",
+        sameSite: "none",
         // domain: "http://localhost:3000",
         // sameSite: "strict",
       });
@@ -425,7 +414,7 @@ const authController = {
     return res.status(200).json("Logged out!");
   },
   logoutAdmin: async (req, res) => {
-    res.clearCookie("refresh_token", { path: "/" });
+    res.clearCookie("refresh_token", { path: "/quan-tri-vien" });
     refreshTokens = refreshTokens.filter(
       (token) => token !== req.cookies.refreshToken
     );
