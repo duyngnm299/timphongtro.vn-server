@@ -30,7 +30,7 @@ app.use(
     origin: [
       process.env.CLIENT_URL,
       "http://localhost:3000",
-      "https://timphongtro-vn-vercel.app",
+      "https://timphongtro-vn.vercel.app",
     ],
     methods: "GET, POST, PUT, DELETE",
     credentials: true,
