@@ -5,8 +5,6 @@ const config = require("config");
 const dotenv = require("dotenv");
 const { User } = require("../models/User");
 const nodemailer = require("nodemailer");
-const { use } = require("../routes/user");
-const path = require("path");
 let refreshTokens = [];
 dotenv.config();
 
@@ -120,6 +118,7 @@ const authController = {
         // Lưu refreshToken vào mảng
         refreshTokens.push(refreshToken);
         res.cookie("refresh_token", refreshToken, {
+          domain: process.env.HOST_NAME,
           secure: true,
           path: "/quan-tri-vien",
           sameSite: "none",
@@ -216,6 +215,7 @@ const authController = {
             // Lưu refreshToken vào mảng
             refreshTokens.push(refreshToken);
             res.cookie("cookie_user", refreshToken, {
+              domain: process.env.HOST_NAME,
               secure: true,
               path: "/",
               sameSite: "none",
@@ -274,6 +274,7 @@ const authController = {
           // Lưu refreshToken vào mảng
           refreshTokens.push(refreshToken);
           res.cookie("cookie_user", refreshToken, {
+            domain: process.env.HOST_NAME,
             secure: true,
             path: "/",
             sameSite: "none",
@@ -360,6 +361,7 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("cookie_user", newRefreshToken, {
+        domain: process.env.HOST_NAME,
         secure: true,
         path: "/",
         sameSite: "none",
@@ -396,6 +398,7 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("refresh_token", newRefreshToken, {
+        domain: process.env.HOST_NAME,
         secure: true,
         path: "/quan-tri-vien",
         sameSite: "none",
