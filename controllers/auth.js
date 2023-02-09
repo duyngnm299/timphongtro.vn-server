@@ -67,7 +67,7 @@ const authController = {
         admin: user.admin,
       },
       process.env.JWT_ACCESS_KEY,
-      { expiresIn: "365d" }
+      { expiresIn: "30d" }
     );
   },
   // GENERATE REFRESH TOKEN
