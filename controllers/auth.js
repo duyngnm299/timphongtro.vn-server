@@ -118,7 +118,7 @@ const authController = {
         // Lưu refreshToken vào mảng
         refreshTokens.push(refreshToken);
         res.cookie("refresh_token", refreshToken, {
-          // domain: "https://timphongtro-vn.vercel.app",
+          // domain: "timphongtro-vn.vercel.app",
           secure: true,
           path: "/quan-tri-vien",
           sameSite: "none",
@@ -215,11 +215,11 @@ const authController = {
             // Lưu refreshToken vào mảng
             refreshTokens.push(refreshToken);
             res.cookie("cookie_user", refreshToken, {
-              domain: "https://timphongtro-vn.vercel.app",
+              domain: "timphongtro-vn.vercel.app",
               secure: true,
               path: "/",
               sameSite: "none",
-              // domain: "http://localhost:3000",
+              // domain: "localhost:3000",
             });
 
             // access token
@@ -274,7 +274,7 @@ const authController = {
           // Lưu refreshToken vào mảng
           refreshTokens.push(refreshToken);
           res.cookie("cookie_user", refreshToken, {
-            domain: "https://timphongtro-vn.vercel.app",
+            domain: "timphongtro-vn.vercel.app",
             secure: true,
             path: "/",
             sameSite: "none",
@@ -361,11 +361,11 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("cookie_user", newRefreshToken, {
-        domain: "https://timphongtro-vn.vercel.app",
+        domain: "timphongtro-vn.vercel.app",
         secure: true,
         path: "/",
         sameSite: "none",
-        // domain: "http://localhost:3000",
+        // domain: "localhost:3000",
         // sameSite: "strict",
       });
 
@@ -398,11 +398,11 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("refresh_token", newRefreshToken, {
-        domain: "https://timphongtro-vn.vercel.app",
+        domain: "timphongtro-vn.vercel.app",
         secure: true,
         path: "/quan-tri-vien",
         sameSite: "none",
-        // domain: "http://localhost:3000",
+        // domain: "localhost:3000",
         // sameSite: "strict",
       });
 

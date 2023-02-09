@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL, "http://localhost:3000", "*"],
+    origin: [process.env.CLIENT_URL, "http://localhost:3000"],
     methods: "GET, POST, PUT, DELETE",
     credentials: true,
   })
@@ -35,7 +35,7 @@ app.use(
 app.use(express.json());
 handleChat(io);
 app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(express.static(path.join(__dirname, "uploads")));
 app.use("/auth", authRoutes);
 app.use("/category", categoryRoutes);
 app.use("/post", postRoutes);
