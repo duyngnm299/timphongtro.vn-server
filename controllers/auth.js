@@ -122,7 +122,7 @@ const authController = {
           secure: true,
           path: "/quan-tri-vien",
           sameSite: "none",
-          httpOnly: true,
+          httpOnly: false,
         });
         return res
           .status(200)
@@ -219,7 +219,7 @@ const authController = {
               domain: "https://timphongtro-vn.vercel.app",
               secure: true,
               sameSite: "none",
-              httpOnly: true,
+              httpOnly: false,
               // domain: "localhost:3000",
             });
 
@@ -278,7 +278,7 @@ const authController = {
             domain: "https://timphongtro-vn.vercel.app",
             secure: true,
             sameSite: "none",
-            httpOnly: true,
+            httpOnly: false,
           });
           res
             .status(200)
@@ -365,7 +365,7 @@ const authController = {
         domain: "https://timphongtro-vn.vercel.app",
         secure: true,
         sameSite: "none",
-        httpOnly: true,
+        httpOnly: false,
 
         // domain: "localhost:3000",
         // sameSite: "strict",
@@ -404,7 +404,7 @@ const authController = {
         secure: true,
         path: "/quan-tri-vien",
         sameSite: "none",
-        httpOnly: true,
+        httpOnly: false,
 
         // domain: "localhost:3000",
         // sameSite: "strict",
