@@ -118,9 +118,7 @@ const authController = {
         // Lưu refreshToken vào mảng
         refreshTokens.push(refreshToken);
         res.cookie("refresh_token", refreshToken, {
-          domain: "https://timphongtro-vn.vercel.app",
           secure: true,
-          path: "/quan-tri-vien",
           sameSite: "none",
           httpOnly: false,
         });
@@ -216,7 +214,6 @@ const authController = {
             // Lưu refreshToken vào mảng
             refreshTokens.push(refreshToken);
             res.cookie("cookie_user", refreshToken, {
-              domain: "https://timphongtro-vn.vercel.app",
               secure: true,
               sameSite: "none",
               httpOnly: false,
@@ -275,7 +272,6 @@ const authController = {
           // Lưu refreshToken vào mảng
           refreshTokens.push(refreshToken);
           res.cookie("cookie_user", refreshToken, {
-            domain: "https://timphongtro-vn.vercel.app",
             secure: true,
             sameSite: "none",
             httpOnly: false,
@@ -361,8 +357,8 @@ const authController = {
       const newRefreshToken = authController.generateRefreshToken(user);
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
+
       res.cookie("cookie_user", newRefreshToken, {
-        domain: "https://timphongtro-vn.vercel.app",
         secure: true,
         sameSite: "none",
         httpOnly: false,
@@ -400,9 +396,7 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("refresh_token", newRefreshToken, {
-        domain: "https://timphongtro-vn.vercel.app",
         secure: true,
-        path: "/quan-tri-vien",
         sameSite: "none",
         httpOnly: false,
 
