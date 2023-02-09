@@ -120,7 +120,7 @@ const authController = {
         res.cookie("refresh_token", refreshToken, {
           secure: true,
           sameSite: "none",
-          httpOnly: false,
+          httpOnly: true,
         });
         return res
           .status(200)
@@ -216,7 +216,7 @@ const authController = {
             res.cookie("cookie_user", refreshToken, {
               secure: true,
               sameSite: "none",
-              httpOnly: false,
+              httpOnly: true,
               // domain: "localhost:3000",
             });
 
@@ -274,7 +274,7 @@ const authController = {
           res.cookie("cookie_user", refreshToken, {
             secure: true,
             sameSite: "none",
-            httpOnly: false,
+            httpOnly: true,
           });
           res
             .status(200)
@@ -361,7 +361,7 @@ const authController = {
       res.cookie("cookie_user", newRefreshToken, {
         secure: true,
         sameSite: "none",
-        httpOnly: false,
+        httpOnly: true,
 
         // domain: "localhost:3000",
         // sameSite: "strict",
@@ -398,7 +398,7 @@ const authController = {
       res.cookie("refresh_token", newRefreshToken, {
         secure: true,
         sameSite: "none",
-        httpOnly: false,
+        httpOnly: true,
 
         // domain: "localhost:3000",
         // sameSite: "strict",
