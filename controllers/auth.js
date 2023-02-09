@@ -67,7 +67,7 @@ const authController = {
         admin: user.admin,
       },
       process.env.JWT_ACCESS_KEY,
-      { expiresIn: "30s" }
+      { expiresIn: "365d" }
     );
   },
   // GENERATE REFRESH TOKEN
@@ -206,7 +206,7 @@ const authController = {
                 id: user._id,
               },
               config.get("JWT_SECRET"),
-              { expiresIn: "30d" }
+              { expiresIn: "365d" }
             );
             return res.status(200).json({ user, accessToken, refreshToken });
           } else {
@@ -229,7 +229,7 @@ const authController = {
                 id: existingUser._id,
               },
               config.get("JWT_SECRET"),
-              { expiresIn: "30d" }
+              { expiresIn: "365d" }
             );
             return res
               .status(200)
