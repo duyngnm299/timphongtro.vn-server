@@ -101,7 +101,7 @@ const authController = {
       }
 
       const isPasswordCorrect = await bcrypt.compare(
-        req.body.password,
+        password,
         alreadyExistUser.password
       );
       if (!isPasswordCorrect) {
@@ -118,10 +118,11 @@ const authController = {
         // Lưu refreshToken vào mảng
         refreshTokens.push(refreshToken);
         res.cookie("refresh_token", refreshToken, {
-          // domain: "timphongtro-vn.vercel.app",
+          domain: "timphongtro-vn.vercel.app",
           secure: true,
           path: "/quan-tri-vien",
           sameSite: "none",
+          httpOnly: true,
         });
         return res
           .status(200)
@@ -219,6 +220,7 @@ const authController = {
               secure: true,
               path: "/",
               sameSite: "none",
+              httpOnly: true,
               // domain: "localhost:3000",
             });
 
@@ -278,6 +280,7 @@ const authController = {
             secure: true,
             path: "/",
             sameSite: "none",
+            httpOnly: true,
           });
           res
             .status(200)
@@ -365,6 +368,8 @@ const authController = {
         secure: true,
         path: "/",
         sameSite: "none",
+        httpOnly: true,
+
         // domain: "localhost:3000",
         // sameSite: "strict",
       });
@@ -402,6 +407,8 @@ const authController = {
         secure: true,
         path: "/quan-tri-vien",
         sameSite: "none",
+        httpOnly: true,
+
         // domain: "localhost:3000",
         // sameSite: "strict",
       });

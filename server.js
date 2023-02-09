@@ -35,6 +35,7 @@ app.use(
 app.use(express.json());
 handleChat(io);
 app.use(express.urlencoded({ extended: true }));
+app.set("trust proxy", 1);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/auth", authRoutes);
 app.use("/category", categoryRoutes);
