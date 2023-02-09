@@ -118,7 +118,7 @@ const authController = {
         // Lưu refreshToken vào mảng
         refreshTokens.push(refreshToken);
         res.cookie("refresh_token", refreshToken, {
-          domain: "timphongtro-vn.vercel.app",
+          domain: "https://timphongtro-vn.vercel.app",
           secure: true,
           path: "/quan-tri-vien",
           sameSite: "none",
@@ -216,9 +216,8 @@ const authController = {
             // Lưu refreshToken vào mảng
             refreshTokens.push(refreshToken);
             res.cookie("cookie_user", refreshToken, {
-              domain: "timphongtro-vn.vercel.app",
+              domain: "https://timphongtro-vn.vercel.app",
               secure: true,
-              path: "/",
               sameSite: "none",
               httpOnly: true,
               // domain: "localhost:3000",
@@ -276,9 +275,8 @@ const authController = {
           // Lưu refreshToken vào mảng
           refreshTokens.push(refreshToken);
           res.cookie("cookie_user", refreshToken, {
-            domain: "timphongtro-vn.vercel.app",
+            domain: "https://timphongtro-vn.vercel.app",
             secure: true,
-            path: "/",
             sameSite: "none",
             httpOnly: true,
           });
@@ -364,9 +362,8 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("cookie_user", newRefreshToken, {
-        domain: "timphongtro-vn.vercel.app",
+        domain: "https://timphongtro-vn.vercel.app",
         secure: true,
-        path: "/",
         sameSite: "none",
         httpOnly: true,
 
@@ -403,7 +400,7 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("refresh_token", newRefreshToken, {
-        domain: "timphongtro-vn.vercel.app",
+        domain: "https://timphongtro-vn.vercel.app",
         secure: true,
         path: "/quan-tri-vien",
         sameSite: "none",
@@ -417,14 +414,14 @@ const authController = {
     });
   },
   logoutUser: async (req, res) => {
-    res.clearCookie("cookie_user", { path: "/" });
+    res.clearCookie("cookie_user");
     refreshTokens = refreshTokens.filter(
       (token) => token !== req.cookies.refreshToken
     );
     return res.status(200).json("Logged out!");
   },
   logoutAdmin: async (req, res) => {
-    res.clearCookie("refresh_token", { path: "/quan-tri-vien" });
+    res.clearCookie("refresh_token");
     refreshTokens = refreshTokens.filter(
       (token) => token !== req.cookies.refreshToken
     );
