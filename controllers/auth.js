@@ -118,6 +118,7 @@ const authController = {
         // Lưu refreshToken vào mảng
         refreshTokens.push(refreshToken);
         res.cookie("refresh_token", refreshToken, {
+          domain: "https://timphongtro-vn.vercel.app",
           secure: true,
           sameSite: "none",
           httpOnly: true,
@@ -205,7 +206,7 @@ const authController = {
                 id: user._id,
               },
               config.get("JWT_SECRET"),
-              { expiresIn: "365d" }
+              { expiresIn: "30d" }
             );
             return res.status(200).json({ user, accessToken, refreshToken });
           } else {
@@ -214,10 +215,10 @@ const authController = {
             // Lưu refreshToken vào mảng
             refreshTokens.push(refreshToken);
             res.cookie("cookie_user", refreshToken, {
+              domain: "https://timphongtro-vn.vercel.app",
               secure: true,
               sameSite: "none",
               httpOnly: true,
-              // domain: "localhost:3000",
             });
 
             // access token
@@ -227,7 +228,7 @@ const authController = {
                 id: existingUser._id,
               },
               config.get("JWT_SECRET"),
-              { expiresIn: "365d" }
+              { expiresIn: "30d" }
             );
             return res
               .status(200)
@@ -272,6 +273,7 @@ const authController = {
           // Lưu refreshToken vào mảng
           refreshTokens.push(refreshToken);
           res.cookie("cookie_user", refreshToken, {
+            domain: "https://timphongtro-vn.vercel.app",
             secure: true,
             sameSite: "none",
             httpOnly: true,
@@ -357,13 +359,12 @@ const authController = {
       const newRefreshToken = authController.generateRefreshToken(user);
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
-
       res.cookie("cookie_user", newRefreshToken, {
+        domain: "https://timphongtro-vn.vercel.app",
         secure: true,
         sameSite: "none",
         httpOnly: true,
-
-        // domain: "localhost:3000",
+        // domain: "http://localhost:3000",
         // sameSite: "strict",
       });
 
@@ -396,11 +397,11 @@ const authController = {
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
       res.cookie("refresh_token", newRefreshToken, {
+        domain: "https://timphongtro-vn.vercel.app",
         secure: true,
         sameSite: "none",
         httpOnly: true,
-
-        // domain: "localhost:3000",
+        // domain: "http://localhost:3000",
         // sameSite: "strict",
       });
 
@@ -408,14 +409,14 @@ const authController = {
     });
   },
   logoutUser: async (req, res) => {
-    res.clearCookie("cookie_user");
+    res.clearCookie("cookie_user", { path: "/" });
     refreshTokens = refreshTokens.filter(
       (token) => token !== req.cookies.refreshToken
     );
     return res.status(200).json("Logged out!");
   },
   logoutAdmin: async (req, res) => {
-    res.clearCookie("refresh_token");
+    res.clearCookie("refresh_token", { path: "/" });
     refreshTokens = refreshTokens.filter(
       (token) => token !== req.cookies.refreshToken
     );
