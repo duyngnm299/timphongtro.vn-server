@@ -35,7 +35,7 @@ app.use(
 app.use(express.json());
 handleChat(io);
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/auth", authRoutes);
 app.use("/category", categoryRoutes);
 app.use("/post", postRoutes);
