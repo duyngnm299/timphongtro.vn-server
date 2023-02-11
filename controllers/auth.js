@@ -119,8 +119,9 @@ const authController = {
         refreshTokens.push(refreshToken);
         res.cookie("refresh_token", refreshToken, {
           domain: "https://timphongtro-vn.vercel.app",
-          secure: true,
-          sameSite: "lax",
+          path: "/",
+          secure: false,
+          sameSite: "none",
           httpOnly: true,
         });
         return res
@@ -216,8 +217,9 @@ const authController = {
             refreshTokens.push(refreshToken);
             res.cookie("cookie_user", refreshToken, {
               domain: "https://timphongtro-vn.vercel.app",
-              secure: true,
-              sameSite: "lax",
+              path: "/",
+              secure: false,
+              sameSite: "none",
               httpOnly: true,
             });
 
@@ -274,8 +276,9 @@ const authController = {
           refreshTokens.push(refreshToken);
           res.cookie("cookie_user", refreshToken, {
             domain: "https://timphongtro-vn.vercel.app",
-            secure: true,
-            sameSite: "lax",
+            path: "/",
+            secure: false,
+            sameSite: "none",
             httpOnly: true,
           });
           res
@@ -361,8 +364,9 @@ const authController = {
       refreshTokens.push(newRefreshToken);
       res.cookie("cookie_user", newRefreshToken, {
         domain: "https://timphongtro-vn.vercel.app",
-        secure: true,
-        sameSite: "lax",
+        path: "/",
+        secure: false,
+        sameSite: "none",
         httpOnly: true,
         // domain: "http://localhost:3000",
         // sameSite: "strict",
@@ -398,8 +402,9 @@ const authController = {
       refreshTokens.push(newRefreshToken);
       res.cookie("refresh_token", newRefreshToken, {
         domain: "https://timphongtro-vn.vercel.app",
-        secure: true,
-        sameSite: "lax",
+        path: "/",
+        secure: false,
+        sameSite: "none",
         httpOnly: true,
         // domain: "http://localhost:3000",
         // sameSite: "strict",
