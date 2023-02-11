@@ -1,12 +1,9 @@
-const { findByIdAndUpdate } = require("../models/Message");
 const Message = require("../models/Message");
 
 const addMessage = async (req, res) => {
-  console.log("[message] :", req.body);
   const newMessage = new Message(req.body);
   try {
     const savedMessage = await newMessage.save();
-    console.log("[savedMessage]", savedMessage);
     return res.status(200).json({ savedMessage });
   } catch (error) {
     return res.json(500).json({ error });
@@ -24,17 +21,17 @@ const getMessage = async (req, res) => {
   }
 };
 
-// const updateSeen = async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     const msg = await Message.findByIdAndUpdate(
-//       id,
-//       { seen: true },
-//       { new: true }
-//     );
-//     return res.status(200).json({ msg });
-//   } catch (error) {
-//     return res.status(500).json({ error });
-//   }
-// };
-module.exports = { addMessage, getMessage };
+const getNewestMessage = async (req, res) => {
+  try {
+    const message = await Message.find({
+      conversationId: req.params.conversationId,
+    })
+      .sort({ ["createdAt"]: "desc" })
+      .limit(1);
+    return res.status(200).json({ message });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
+
+module.exports = { addMessage, getMessage, getNewestMessage };

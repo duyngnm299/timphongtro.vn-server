@@ -16,7 +16,8 @@ const userRoutes = require("./routes/user");
 const conversationRoutes = require("./routes/conversation");
 const messageRoutes = require("./routes/message");
 const transactionRoutes = require("./routes/transaction");
-const handleChat = require("./controllers/chat");
+const notificationRoutes = require("./routes/notification");
+const handleSocket = require("./controllers/handleSocket");
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
@@ -33,7 +34,7 @@ app.use(
   })
 );
 app.use(express.json());
-handleChat(io);
+handleSocket(io);
 app.use(express.urlencoded({ extended: true }));
 app.set("trust proxy", 1);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -44,6 +45,7 @@ app.use("/user", userRoutes);
 app.use("/conversation", conversationRoutes);
 app.use("/message", messageRoutes);
 app.use("/transaction", transactionRoutes);
+app.use("/notification", notificationRoutes);
 
 const PORT = process.env.PORT || 5000;
 mongoose

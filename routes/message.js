@@ -4,10 +4,10 @@ const router = express.Router();
 const {
   addMessage,
   getMessage,
-  updateSeen,
+  getNewestMessage,
 } = require("../controllers/message");
 
 router.post("/", addMessage);
 router.get("/:conversationId", getMessage);
-// router.post("/update/:id", updateSeen);
+router.get("/newest/:conversationId", getNewestMessage);
 module.exports = router;
