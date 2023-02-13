@@ -117,13 +117,13 @@ const authController = {
           authController.generateRefreshToken(alreadyExistUser);
         // Lưu refreshToken vào mảng
         refreshTokens.push(refreshToken);
-        res.cookie("refresh_token", refreshToken, {
-          domain: "https://timphongtro-vn.vercel.app",
-          path: "/",
-          secure: false,
-          sameSite: "none",
-          httpOnly: true,
-        });
+        // res.cookie("refresh_token", refreshToken, {
+        //   domain: "https://timphongtro-vn.vercel.app",
+        //   path: "/",
+        //   secure: false,
+        //   sameSite: "none",
+        //   httpOnly: true,
+        // });
         return res
           .status(200)
           .json({ user: alreadyExistUser, refreshToken, accessToken });
@@ -215,14 +215,13 @@ const authController = {
               authController.generateRefreshToken(existingUser);
             // Lưu refreshToken vào mảng
             refreshTokens.push(refreshToken);
-            res.cookie("cookie_user", refreshToken, {
-              domain: "https://timphongtro-vn.vercel.app",
-              path: "/",
-              secure: false,
-              sameSite: "none",
-              httpOnly: true,
-            });
-
+            // res.cookie("cookie_user", refreshToken, {
+            //   domain: "https://timphongtro-vn.vercel.app",
+            //   path: "/",
+            //   secure: false,
+            //   sameSite: "none",
+            //   httpOnly: true,
+            // });
             // access token
             const accessToken = jwt.sign(
               {
@@ -250,7 +249,6 @@ const authController = {
       try {
         const username = req.body.username;
         const password = req.body.password;
-
         const alreadyExistUser = await User.findOne({
           username: username,
         });
@@ -260,13 +258,12 @@ const authController = {
         }
 
         const isPasswordCorrect = await bcrypt.compare(
-          req.body.password,
+          password,
           alreadyExistUser.password
         );
         if (!isPasswordCorrect) {
           return res.status(400).json({ message: "Incorrect password!" });
         }
-
         if (alreadyExistUser && isPasswordCorrect) {
           const accessToken =
             authController.generateAccessToken(alreadyExistUser);
@@ -274,14 +271,15 @@ const authController = {
             authController.generateRefreshToken(alreadyExistUser);
           // Lưu refreshToken vào mảng
           refreshTokens.push(refreshToken);
-          res.cookie("cookie_user", refreshToken, {
-            domain: "https://timphongtro-vn.vercel.app",
-            path: "/",
-            secure: false,
-            sameSite: "none",
-            httpOnly: true,
-          });
-          res
+          // res.cookie("cookie_user", refreshToken, {
+          //   domain: "https://timphongtro-vn.vercel.app",
+          //   path: "/",
+          //   secure: false,
+          //   sameSite: "none",
+          //   httpOnly: true,
+          // });
+          console.log(refreshTokens);
+          return res
             .status(200)
             .json({ user: alreadyExistUser, refreshToken, accessToken });
         }
@@ -304,7 +302,6 @@ const authController = {
 
       const hashPassword = await bcrypt.hash(password, 12);
       const existingEmail = await User.findOne({ email });
-
       const existingUsername = await User.findOne({ username });
       const memberCode = Math.floor(100000 + Math.random() * 900000);
 
@@ -339,92 +336,90 @@ const authController = {
 
   requestRefreshToken: async (req, res) => {
     // Lấy refreshToken từ user
-    const cookie_user = req.cookies.cookie_user;
+    const { refreshToken } = req.body;
 
-    if (!cookie_user) {
+    if (!refreshToken) {
       return res.status(401).json("You are not authenticated!");
     }
 
     // Nếu mảng không chứa refresh token cũ thì báo lỗi
-    if (!refreshTokens.includes(cookie_user)) {
+    if (!refreshTokens.includes(refreshToken)) {
       return res.status(403).json("Refresh token is not valid!");
     }
     // Verify refreshToken. Nếu lỗi thì báo lỗi, nếu không lỗi thì sau khi accessToken hết hạn (30s),
     // thì sẽ dùng refreshToken cũ để tạo accessToken và refreshToken mới.
-    jwt.verify(cookie_user, process.env.JWT_REFRESH_KEY, (err, user) => {
+    jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
       if (err) {
         console.log(err);
       }
       // Lọc mảng để xóa refreshToken cũ
-      refreshTokens = refreshTokens.filter((token) => token !== cookie_user);
+      refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
       // Create new refreshToken, accessToken
       const newAccessToken = authController.generateAccessToken(user);
       const newRefreshToken = authController.generateRefreshToken(user);
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
-      res.cookie("cookie_user", newRefreshToken, {
-        domain: "https://timphongtro-vn.vercel.app",
-        path: "/",
-        secure: false,
-        sameSite: "none",
-        httpOnly: true,
-        // domain: "http://localhost:3000",
-        // sameSite: "strict",
-      });
+      // res.cookie("cookie_user", newRefreshToken, {
+      //   domain: "https://timphongtro-vn.vercel.app",
+      //   path: "/",
+      //   secure: false,
+      //   sameSite: "none",
+      //   httpOnly: true,
+      // });
 
-      return res.status(200).json({ accessToken: newAccessToken });
+      return res
+        .status(200)
+        .json({ accessToken: newAccessToken, refreshToken: newRefreshToken });
     });
   },
   requestRefreshTokenAdmin: async (req, res) => {
     // Lấy refreshToken từ user
-    const refresh_token = req.cookies.refresh_token;
-
-    if (!refresh_token) {
+    const { refreshToken } = req.body;
+    console.log(refreshToken);
+    if (!refreshToken) {
       return res.status(401).json("You are not authenticated!");
     }
 
     // Nếu mảng không chứa refresh token cũ thì báo lỗi
-    if (!refreshTokens.includes(refresh_token)) {
+    if (!refreshTokens.includes(refreshToken)) {
       return res.status(403).json("Refresh token is not valid!");
     }
     // Verify refreshToken. Nếu lỗi thì báo lỗi, nếu không lỗi thì sau khi accessToken hết hạn (30s),
     // thì sẽ dùng refreshToken cũ để tạo accessToken và refreshToken mới.
-    jwt.verify(refresh_token, process.env.JWT_REFRESH_KEY, (err, user) => {
+    jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
       if (err) {
         console.log(err);
       }
       // Lọc mảng để xóa refreshToken cũ
-      refreshTokens = refreshTokens.filter((token) => token !== refresh_token);
+      refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
       // Create new refreshToken, accessToken
       const newAccessToken = authController.generateAccessToken(user);
       const newRefreshToken = authController.generateRefreshToken(user);
       // Thêm newRefreshToken vào mảng
       refreshTokens.push(newRefreshToken);
-      res.cookie("refresh_token", newRefreshToken, {
-        domain: "https://timphongtro-vn.vercel.app",
-        path: "/",
-        secure: false,
-        sameSite: "none",
-        httpOnly: true,
-        // domain: "http://localhost:3000",
-        // sameSite: "strict",
-      });
+      // res.cookie("refresh_token", newRefreshToken, {
+      //   domain: "https://timphongtro-vn.vercel.app",
+      //   path: "/",
+      //   secure: false,
+      //   sameSite: "none",
+      //   httpOnly: true,
+      //   // domain: "http://localhost:3000",
+      //   // sameSite: "strict",
+      // });
 
-      return res.status(200).json({ accessToken: newAccessToken });
+      return res
+        .status(200)
+        .json({ accessToken: newAccessToken, refreshToken: newRefreshToken });
     });
   },
   logoutUser: async (req, res) => {
-    res.clearCookie("cookie_user", { path: "/" });
-    refreshTokens = refreshTokens.filter(
-      (token) => token !== req.cookies.refreshToken
-    );
+    const { refreshToken } = req.body;
+    refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
     return res.status(200).json("Logged out!");
   },
   logoutAdmin: async (req, res) => {
-    res.clearCookie("refresh_token", { path: "/" });
-    refreshTokens = refreshTokens.filter(
-      (token) => token !== req.cookies.refreshToken
-    );
+    const { refreshToken } = req.body;
+    refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
     return res.status(200).json("Logged out!");
   },
 

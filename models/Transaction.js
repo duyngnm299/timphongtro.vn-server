@@ -29,7 +29,10 @@ const transactionSchema = mongoose.Schema(
         },
       ],
     },
-    dayCreated: { type: String, default: new Date().toLocaleDateString() },
+    dayCreated: {
+      type: String,
+      default: moment(new Date()).format("D/M/YYYY"),
+    },
     monthCreated: {
       type: String,
       default: moment(new Date()).format("MM/YYYY"),
