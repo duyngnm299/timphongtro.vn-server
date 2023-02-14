@@ -20,7 +20,11 @@ const notificationRoutes = require("./routes/notification");
 const handleSocket = require("./controllers/handleSocket");
 const io = require("socket.io")(server, {
   cors: {
-    origin: "*",
+    origin: [
+      "http://localhost:3000",
+      "https://timphongtro-backend.onrender.com/",
+    ],
+    methods: ["GET", "POST"],
   },
 });
 dotenv.config();
