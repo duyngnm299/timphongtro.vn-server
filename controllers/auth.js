@@ -201,18 +201,21 @@ const authController = {
             });
             console.log(user);
             const refreshToken = authController.generateRefreshToken(user);
-            const accessToken = jwt.sign(
-              {
-                email: user.email,
-                id: user._id,
-              },
-              config.get("JWT_SECRET"),
-              { expiresIn: "30d" }
-            );
+            const accessToken = authController.generateAccessToken(user);
+            // const accessToken = jwt.sign(
+            //   {
+            //     email: user.email,
+            //     id: user._id,
+            //   },
+            //   config.get("JWT_SECRET"),
+            //   { expiresIn: "30s" }
+            // );
             return res.status(200).json({ user, accessToken, refreshToken });
           } else {
             const refreshToken =
               authController.generateRefreshToken(existingUser);
+            const accessToken =
+              authController.generateAccessToken(existingUser);
             // Lưu refreshToken vào mảng
             refreshTokens.push(refreshToken);
             // res.cookie("cookie_user", refreshToken, {
@@ -223,14 +226,14 @@ const authController = {
             //   httpOnly: true,
             // });
             // access token
-            const accessToken = jwt.sign(
-              {
-                email: existingUser.email,
-                id: existingUser._id,
-              },
-              config.get("JWT_SECRET"),
-              { expiresIn: "30d" }
-            );
+            // const accessToken = jwt.sign(
+            //   {
+            //     email: existingUser.email,
+            //     id: existingUser._id,
+            //   },
+            //   config.get("JWT_SECRET"),
+            //   { expiresIn: "30s" }
+            // );
             return res
               .status(200)
               .json({ user: existingUser, accessToken, refreshToken });
