@@ -370,8 +370,6 @@ const createPreviewPost = async (req, res) => {
     const postCode = Math.floor(10000 + Math.random() * 90000);
     let imagesArray = [];
     const images = [...req.files];
-    console.log(req.files);
-    console.log(createdBy);
     images.forEach((element) => {
       const image = {
         imageName: element.originalname,
@@ -381,7 +379,6 @@ const createPreviewPost = async (req, res) => {
       };
       imagesArray.push(image);
     });
-    console.log(createdBy);
     const newPost = new Post({
       category_id,
       category_name,
