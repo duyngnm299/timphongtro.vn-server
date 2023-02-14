@@ -21,6 +21,7 @@ const handleSocket = require("./controllers/handleSocket");
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
+    credentials: true,
   },
 });
 dotenv.config();
@@ -28,7 +29,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL, "http://localhost:3000"],
+    origin: [process.env.CLIENT_URL, "http://localhost:3000", "*"],
     methods: "GET, POST, PUT, DELETE",
     credentials: true,
   })
